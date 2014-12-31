@@ -1,7 +1,23 @@
+machine:
+  ghc:
+    version: 7.8.3
+  environment:
+    PATH: $HOME/.cabal/bin:$PATH
+    COVERALLS_REPO_TOKEN: SUwFdsOK2VhTVNgcQDXM1cZWSQlxuHpLw
+
 checkout:
   post:
     - git submodule sync
     - git submodule update --init
-machine:
-  ghc:
-    version: 7.8.3
+    - ./cabal-user-install.sh hpc-coveralls
+    - cabal sandbox init
+    - git config --global user.email "john@example.com"
+    - git config --global user.name "John Doe"
+
+test:
+  override:
+    - cabal configure --enable-tests --enable-library-coverage --ghc-options=-Werror && cabal build
+    - run-cabal-test spec --show-details=always
+    - cabal test doctests
+  post:
+    - hpc-coveralls spec --exclude-dir=tes
