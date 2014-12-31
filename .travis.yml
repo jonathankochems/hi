@@ -17,4 +17,4 @@ script:
   - cabal test doctests
 
 after_script:
-  - hpc-coveralls spec --exclude-dir=test
+  - hpc-coveralls spec --display-report --print-response --exclude-dir=tes
