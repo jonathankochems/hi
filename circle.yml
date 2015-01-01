@@ -9,7 +9,13 @@ checkout:
   post:
     - git submodule sync
     - git submodule update --init
-    - ./cabal-user-install.sh hpc-coveralls
+    - git clone https://github.com/fujimura/hpc-coveralls.git
+    - git checkout circleci
+    - pushd hpc-coveralls
+    - cabal sandbox init
+    - cabal install -j --bindir ~/.cabal/bin --datadir ~/.cabal/share
+    - popd
+    - rm -rfv hpc-coveralls
     - cabal sandbox init
     - git config --global user.email "john@example.com"
     - git config --global user.name "John Doe"
