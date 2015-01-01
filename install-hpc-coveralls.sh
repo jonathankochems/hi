@@ -1,7 +1,7 @@
 #! /bin/sh
 git clone https://github.com/fujimura/hpc-coveralls.git
-git checkout circleci
 cd hpc-coveralls
+git checkout circleci
 cabal sandbox init
 cabal install -j --bindir ~/.cabal/bin --datadir ~/.cabal/share
 cd ../

@@ -9,7 +9,7 @@ checkout:
   post:
     - git submodule sync
     - git submodule update --init
-    - ./hpc.sh
+    - ./install-hpc-coveralls.sh
     - git config --global user.email "john@example.com"
     - git config --global user.name "John Doe"
 
