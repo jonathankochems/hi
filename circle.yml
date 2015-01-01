@@ -19,4 +19,4 @@ test:
     - run-cabal-test spec --show-details=always
     - cabal test doctests
   post:
-    - hpc-coveralls spec --display-report --print-response --exclude-dir=tes
+    - hpc-coveralls spec --display-report --print-response --exclude-dir=test
