@@ -3,13 +3,12 @@ machine:
     version: 7.8.3
   environment:
     PATH: $HOME/.cabal/bin:$PATH
-    COVERALLS_REPO_TOKEN: SUwFdsOK2VhTVNgcQDXM1cZWSQlxuHpLw
 
 checkout:
   post:
     - git submodule sync
     - git submodule update --init
-    - ./install-hpc-coveralls.sh
+    - ./cabal-user-install.sh codecov-haskell
     - git config --global user.email "john@example.com"
     - git config --global user.name "John Doe"
 
@@ -19,4 +18,4 @@ test:
     - run-cabal-test spec --show-details=always
     - cabal test doctests
   post:
-    - hpc-coveralls spec --display-report --print-response --exclude-dir=test
+    - codecov-haskell spec --display-report --print-response --exclude-dir=test
