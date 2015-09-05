@@ -72,6 +72,7 @@ process Option {..} = dropExtraRegularFiles . map go . dropFilesInRoot
                         substitute (decodeUtf8 text) (context options)
     options          = [("packageName", packageName)
                        ,("moduleName", moduleName)
+                       ,("username", username)
                        ,("author", author)
                        ,("email", email)
                        ,("year", year)

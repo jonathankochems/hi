@@ -94,10 +94,11 @@ spec = do
         (res,_) <- capture $ Cli.run ["-v"] `catch` handle
         res `shouldBe` (showVersion version) ++ "\n"
 
-packageName, moduleName, author, email :: String
+packageName, moduleName, author, email, username :: String
 packageName = "testapp"
 moduleName  = "System.Awesome.Library"
 author      = "Fujimura Daisuke"
+username    = "fujimura"
 email       = "me@fujimuradaisuke.com"
 
 features :: Spec
@@ -185,6 +186,7 @@ runWithCommandLineOptions opts action = do
     inTestDirectory $ hSilence [stdout] $ do
       Cli.run $ opts ++ [ "-a", quote author
                         , "-e", quote email
+                        , "--username", username
                         , "-r", (root </> "test" </> "template")
                         ]
       action
@@ -196,7 +198,7 @@ runWithLocalGitConfig opts action = do
         _ <- system $ "git init"
         _ <- system $ "git config user.name" ++ " " ++ quote author
         _ <- system $ "git config user.email" ++ " " ++ quote email
-        Cli.run $ opts ++ [ "-r", (root </> "test" </> "template") ]
+        Cli.run $ opts ++ [ "-r", (root </> "test" </> "template"), "--username", username ]
         action
 
 runWithConfigurationFile :: [String] -> IO () -> IO ()
@@ -211,6 +213,7 @@ runWithConfigurationFile opts action = do
         withEnv "HOME" pwd' $ do
           Cli.run $ opts ++ [ "--configuration-file", (joinPath [pwd', ".hirc"])
                             , "-r", (root </> "test" </> "template")
+                            , "--username", username
                             ]
           action
 

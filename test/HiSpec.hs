@@ -18,6 +18,7 @@ options = Option { packageName    = "testapp"
                  , directoryName  = "testapp"
                  , author         = "Fujimura Daisuke"
                  , email          = "me@fujimuradaisuke.com"
+                 , username       = "fujimura"
                  , templateSource = FromRepo "file://somewhere"
                  , year           = "2014"
                  , afterCommands  = []

@@ -25,6 +25,8 @@ buildOption copt = do
     year <- getCurrentYear
     author <- guessAuthor
     email <- guessEmail
+    username <- guessUsername
+    --email <- guessEmail
     let mGitInit = if CommandLineOption.initializeGitRepository copt
                      then Just "git init && git add . && git commit -m \"Initial commit\""
                      else Nothing
@@ -37,6 +39,7 @@ buildOption copt = do
                   , directoryName  = fromMaybe packageName $ CommandLineOption.directoryName copt
                   , author         = author
                   , email          = email
+                  , username       = username
                   , templateSource = FromRepo $ CommandLineOption.repository copt
                   , year           = year
                   , afterCommands  = afterCommands
@@ -48,6 +51,15 @@ buildOption copt = do
                        Nothing   -> return Nothing
     choice :: [IO (Maybe String)] -> IO (Maybe String)
     choice xs = foldr1 mplus <$> sequence xs
+    guessUsername :: IO String
+    guessUsername = do
+      mc <- choice [ return $ CommandLineOption.username copt
+                   , lookupConfig "username"
+                   , Git.config "user.name"
+                   ]
+      case mc of
+        Just x -> return x
+        Nothing -> fail "No username specified"
     guessAuthor :: IO String
     guessAuthor = do
       mc <- choice [ return $ CommandLineOption.author copt

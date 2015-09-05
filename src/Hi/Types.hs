@@ -21,6 +21,7 @@ data Option = Option
              , packageName :: String
              , directoryName :: String
              , author :: String
+             , username :: String
              , email :: String
              , year :: String
              , templateSource :: TemplateSource
