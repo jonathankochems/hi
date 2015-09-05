@@ -10,3 +10,5 @@ cabal-dev
 cabal.sandbox.config
 
 test/compiled/
+hi.sublime-project
+hi.sublime-workspace
